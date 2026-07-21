@@ -1,0 +1,17 @@
+prefix_rule(
+    pattern = ["git", "add"],
+    decision = "allow",
+    justification = "ステージングはローカル操作のみで安全なため許可する",
+)
+
+prefix_rule(
+    pattern = ["git", "commit"],
+    decision = "allow",
+    justification = "ローカルコミットは取り消し可能で、レビュー粒度を保つために積極的に行わせたいため許可する",
+)
+
+prefix_rule(
+    pattern = ["git", "push"],
+    decision = "forbidden",
+    justification = "リモートへの反映は必ず人間の確認を経てから行うため禁止する",
+)

@@ -33,4 +33,19 @@ link "$DOTFILES_DIR/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 mkdir -p "$HOME/.codex"
 link "$DOTFILES_DIR/AGENTS.md" "$HOME/.codex/AGENTS.md"
 
+# Claude Code の権限・MCP設定
+link "$DOTFILES_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
+
+# カスタムスキル（スキルごとにリンクする。~/.claude/skills/.system は
+# Codex CLI が自動インストールするシステムスキルなので触らない）
+mkdir -p "$HOME/.claude/skills"
+for skill_dir in "$DOTFILES_DIR"/.claude/skills/*/; do
+  skill_name="$(basename "$skill_dir")"
+  link "${skill_dir%/}" "$HOME/.claude/skills/$skill_name"
+done
+# Codex CLI は ~/.codex/skills -> ~/.claude/skills/ を経由して同じスキルを参照する
+
+# Codex CLI の権限ルール
+link "$DOTFILES_DIR/.codex/rules/default.rules" "$HOME/.codex/rules/default.rules"
+
 echo "done."
