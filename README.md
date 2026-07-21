@@ -7,8 +7,8 @@ Claude Code / Codex CLI のグローバル設定を共有管理するリポジ�
 - `AGENTS.md` — Claude Code・Codex共通のグローバル開発ガイドライン（SSOT）
 - `.claude/CLAUDE.md` — Claude Code用のエントリーポイント。`@` インポートで `AGENTS.md` を参照する
 - `.claude/settings.json` — Claude Codeの権限・MCP設定
-- `.claude/skills/` — カスタムスキル（Claude Code・Codex共通。`~/.claude/skills/.system` 配下の
-  システムスキルは対象外）
+- `skills/` — カスタムスキル（Claude Code・Codex共通。各ツールが自動インストールする
+  `.system` 配下のシステムスキルは対象外）
 - `.codex/rules/default.rules` — Codex CLIの権限ルール
 - `install.sh` — 各種シンボリックリンクを作成するセットアップスクリプト
 
@@ -27,19 +27,20 @@ git clone https://github.com/shu0411/dotfiles.git ~/dotfiles
 | `~/dotfiles/.claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
 | `~/dotfiles/AGENTS.md` | `~/.codex/AGENTS.md` |
 | `~/dotfiles/.claude/settings.json` | `~/.claude/settings.json` |
-| `~/dotfiles/.claude/skills/<name>` | `~/.claude/skills/<name>`（スキルごとに個別リンク） |
+| `~/dotfiles/skills/<name>` | `~/.claude/skills/<name>`（スキルごとに個別リンク） |
+| `~/dotfiles/skills/<name>` | `~/.codex/skills/<name>`（スキルごとに個別リンク） |
 | `~/dotfiles/.codex/rules/default.rules` | `~/.codex/rules/default.rules` |
 
 これにより、Claude Code（`~/.claude/CLAUDE.md` → `@~/dotfiles/AGENTS.md`）と
 Codex CLI（`~/.codex/AGENTS.md` → `~/dotfiles/AGENTS.md`）の両方が、
 それぞれ直接 `~/dotfiles/AGENTS.md` を参照する。
 
-スキルは `~/.codex/skills` が既に `~/.claude/skills/` へのシンボリックリンクになっているため、
-`~/.claude/skills/<name>` を管理するだけで Claude Code・Codex CLI 両方から同じ内容を参照できる。
-`~/.claude/skills/.system` はCodex CLIが自動インストールするシステムスキル置き場なので、
-このリポジトリでは管理しない。
+スキルも同様に、`~/.claude/skills/<name>` と `~/.codex/skills/<name>` の両方から
+それぞれ直接 `~/dotfiles/skills/<name>` を参照する。`.system`（各ツールが
+自動インストールするシステムスキル置き場）はこのリポジトリでは管理せず、
+`.gitignore` でも除外している。
 
-新しいカスタムスキルを追加する場合は `~/dotfiles/.claude/skills/<name>/` にファイルを置き、
+新しいカスタムスキルを追加する場合は `~/dotfiles/skills/<name>/` にファイルを置き、
 `install.sh` を再実行すればよい。
 
 ## 注意

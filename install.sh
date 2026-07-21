@@ -36,14 +36,25 @@ link "$DOTFILES_DIR/AGENTS.md" "$HOME/.codex/AGENTS.md"
 # Claude Code の権限・MCP設定
 link "$DOTFILES_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
 
-# カスタムスキル（スキルごとにリンクする。~/.claude/skills/.system は
-# Codex CLI が自動インストールするシステムスキルなので触らない）
+# カスタムスキル（Claude Code・Codex共通。スキルごとに両方へリンクする。
+# ~/.claude/skills/.system, ~/.codex/skills/.system は各ツールが自動インストール
+# するシステムスキル置き場なので触らない）
 mkdir -p "$HOME/.claude/skills"
-for skill_dir in "$DOTFILES_DIR"/.claude/skills/*/; do
+
+# Codexのシステムスキルが ~/.claude 配下に混在しないよう、
+# ~/.codex/skills も ~/.claude/skills と同様に実体ディレクトリ+スキルごとの個別リンクにする
+if [ -L "$HOME/.codex/skills" ]; then
+  backup="$HOME/.codex/skills.backup.$(date +%Y%m%d%H%M%S)"
+  echo "backup: $HOME/.codex/skills -> $backup"
+  mv "$HOME/.codex/skills" "$backup"
+fi
+mkdir -p "$HOME/.codex/skills"
+
+for skill_dir in "$DOTFILES_DIR"/skills/*/; do
   skill_name="$(basename "$skill_dir")"
   link "${skill_dir%/}" "$HOME/.claude/skills/$skill_name"
+  link "${skill_dir%/}" "$HOME/.codex/skills/$skill_name"
 done
-# Codex CLI は ~/.codex/skills -> ~/.claude/skills/ を経由して同じスキルを参照する
 
 # Codex CLI の権限ルール
 link "$DOTFILES_DIR/.codex/rules/default.rules" "$HOME/.codex/rules/default.rules"
