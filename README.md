@@ -20,13 +20,12 @@ git clone https://github.com/shu0411/dotfiles.git ~/dotfiles
 
 | リンク元（実体） | リンク先 |
 | --- | --- |
-| `~/dotfiles/AGENTS.md` | `~/AGENTS.md` |
 | `~/dotfiles/.claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
-| `~/AGENTS.md` | `~/.codex/AGENTS.md` |
+| `~/dotfiles/AGENTS.md` | `~/.codex/AGENTS.md` |
 
 これにより、Claude Code（`~/.claude/CLAUDE.md` → `@~/dotfiles/AGENTS.md`）と
-Codex CLI（`~/.codex/AGENTS.md` → `~/AGENTS.md` → `~/dotfiles/AGENTS.md`）の両方が
-同じ `~/dotfiles/AGENTS.md` を参照する。
+Codex CLI（`~/.codex/AGENTS.md` → `~/dotfiles/AGENTS.md`）の両方が、
+それぞれ直接 `~/dotfiles/AGENTS.md` を参照する。
 
 ## 注意
 

@@ -26,14 +26,11 @@ link() {
   echo "linked: $dst -> $src"
 }
 
-# AGENTS.md (SSOT) を ~/AGENTS.md として公開する
-link "$DOTFILES_DIR/AGENTS.md" "$HOME/AGENTS.md"
-
 # Claude Code は ~/.claude/CLAUDE.md から AGENTS.md を @ インポートする
 link "$DOTFILES_DIR/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 
-# Codex CLI は ~/.codex/AGENTS.md を見るため、~/AGENTS.md へのリンクを張る
+# Codex CLI は ~/.codex/AGENTS.md (SSOT) を直接見に行く
 mkdir -p "$HOME/.codex"
-link "$HOME/AGENTS.md" "$HOME/.codex/AGENTS.md"
+link "$DOTFILES_DIR/AGENTS.md" "$HOME/.codex/AGENTS.md"
 
 echo "done."
