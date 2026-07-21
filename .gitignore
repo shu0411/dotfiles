@@ -1,3 +1,0 @@
-# Claude Code / Codex CLI が自動インストールするシステムスキル置き場。
-# 誤って install.sh 経由の実体ディレクトリ配下に紛れ込んでも追跡しない。
-/skills/.system/
