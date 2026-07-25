@@ -15,3 +15,9 @@ prefix_rule(
     decision = "forbidden",
     justification = "リモートへの反映は必ず人間の確認を経てから行うため禁止する",
 )
+
+prefix_rule(
+    pattern = ["curl", "-L", "--max-time", "20", "-sS"],
+    decision = "allow",
+    justification = "タイムアウト付きの読み取り専用リクエストを許可する",
+)
