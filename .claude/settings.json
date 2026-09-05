@@ -1,6 +1,4 @@
 {
-  "theme": "dark",
-  "effortLevel": "high",
   "permissions": {
     "allow": [
       "Bash(ls *)",
@@ -52,6 +50,21 @@
       "Bash(gh run view *)",
       "WebFetch(domain:atcoder.jp)"
     ],
-    "deny": ["Bash(git push:*)"]
+    "deny": [
+      "Bash(git push:*)"
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/anthropics/skills.git"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "theme": "dark",
+  "enabledPlugins": {
+    "example-skills@anthropic-agent-skills": true
   }
 }
