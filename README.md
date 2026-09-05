@@ -43,6 +43,19 @@ Codex CLI（`~/.codex/AGENTS.md` → `~/dotfiles/AGENTS.md`）の両方が、
 新しいカスタムスキルを追加する場合は `~/dotfiles/skills/<name>/` にファイルを置き、
 `install.sh` を再実行すればよい。
 
+## TWG CLI の導入
+
+Jira・Confluence などを Claude Code / Codex から利用するための Atlassian 公式 CLI。
+macOS / Linux では、以下の公式コマンドで導入し、画面の案内に従って認証する。
+セットアップ時にエージェント用スキルもインストールされるため、スキル本体は dotfiles では管理しない。
+
+```bash
+curl -fsSL https://teamwork-graph.atlassian.com/cli/install -o twg-install.sh
+bash twg-install.sh
+```
+
+詳細は [公式セットアップ手順](https://support.atlassian.com/organization-administration/docs/get-started-with-twg-cli/) を参照。
+
 ## 注意
 
 - APIキー・認証情報などの機密情報はこのリポジトリに含めない
