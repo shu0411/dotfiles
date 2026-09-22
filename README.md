@@ -5,7 +5,8 @@ Claude Code / Codex CLI のグローバル設定を共有管理するリポジ�
 ## 構成
 
 - `AGENTS.md` — Claude Code・Codex共通のグローバル開発ガイドライン（SSOT）
-- `.claude/CLAUDE.md` — Claude Code用のエントリーポイント。`@` インポートで `AGENTS.md` を参照する
+- `.claude/CLAUDE.md` — Claude Code用のエントリーポイント。`@` インポートで `AGENTS.md` を参照するほか、
+  Issue駆動 + AIエージェント実装フローにおけるClaude Codeの動作モードを定義する
 - `.claude/settings.json` — Claude Codeの権限・MCP設定
 - `skills/` — カスタムスキル（Claude Code・Codex共通。各ツールが自動インストールする
   `.system` 配下のシステムスキルは対象外）
