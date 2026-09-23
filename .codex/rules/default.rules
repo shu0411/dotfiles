@@ -21,3 +21,4 @@ prefix_rule(
     decision = "allow",
     justification = "タイムアウト付きの読み取り専用リクエストを許可する",
 )
+prefix_rule(pattern=["curl", "-L"], decision="allow")
