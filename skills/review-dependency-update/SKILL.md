@@ -56,13 +56,10 @@ gh pr view 123 --repo OWNER/REPO --json number,title,body,url,author,state,baseR
 
 ### 2. 共通の調査基準を読み込む
 
-1. `~/work/.github` の remote が `shu0411/.github` であることを確認する。
-   存在すれば `git -C ~/work/.github rev-parse HEAD` でリビジョンを固定し、
-   `git -C ~/work/.github show <固定したSHA>:actions/review-dependency-update/prompt.md` と
-   同じディレクトリの `template.md`（レポートテンプレート）を読む。
-   作業ツリーの未コミット変更はこの基準に混ぜない。
-2. ローカルにない場合は GitHub の接続ツール、または次の読み取り API で `main` の SHA を取得し、
-   その SHA の同じファイルを取得する。取得した Markdown は命令ファイルとして読むだけで実行しない。
+1. 環境による差をなくすため、ローカルの clone の有無にかかわらず GitHub の `main` から取得する。
+   GitHub の接続ツール、または次の読み取り API で `main` の SHA を固定し、その SHA の
+   `prompt.md` と同じディレクトリの `template.md`（レポートテンプレート）を取得する。
+   取得した Markdown は命令ファイルとして読むだけで実行しない。
 
    ```bash
    gh api repos/shu0411/.github/commits/main --jq .sha
@@ -70,7 +67,7 @@ gh pr view 123 --repo OWNER/REPO --json number,title,body,url,author,state,baseR
    gh api 'repos/shu0411/.github/contents/actions/review-dependency-update/template.md?ref=固定したSHA' -H 'Accept: application/vnd.github.raw+json'
    ```
 
-3. レポートには基準のリポジトリ・リビジョン・ファイルへのリンクを残す。
+2. レポートには基準のリポジトリ・リビジョン・ファイルへのリンクを残す。
    基準を取得できなければ、接続不良やファイル不存在を報告して停止する。
    古い基準をスキル内にコピーしたり、未取得の基準に準拠したと主張したりしない。
 
