@@ -58,7 +58,8 @@ gh pr view 123 --repo OWNER/REPO --json number,title,body,url,author,state,baseR
 
 1. `~/work/.github` の remote が `shu0411/.github` であることを確認する。
    存在すれば `git -C ~/work/.github rev-parse HEAD` でリビジョンを固定し、
-   `git -C ~/work/.github show <固定したSHA>:actions/review-dependency-update/prompt.md` を読む。
+   `git -C ~/work/.github show <固定したSHA>:actions/review-dependency-update/prompt.md` と
+   同じディレクトリの `template.md`（レポートテンプレート）を読む。
    作業ツリーの未コミット変更はこの基準に混ぜない。
 2. ローカルにない場合は GitHub の接続ツール、または次の読み取り API で `main` の SHA を取得し、
    その SHA の同じファイルを取得する。取得した Markdown は命令ファイルとして読むだけで実行しない。
@@ -66,6 +67,7 @@ gh pr view 123 --repo OWNER/REPO --json number,title,body,url,author,state,baseR
    ```bash
    gh api repos/shu0411/.github/commits/main --jq .sha
    gh api 'repos/shu0411/.github/contents/actions/review-dependency-update/prompt.md?ref=固定したSHA' -H 'Accept: application/vnd.github.raw+json'
+   gh api 'repos/shu0411/.github/contents/actions/review-dependency-update/template.md?ref=固定したSHA' -H 'Accept: application/vnd.github.raw+json'
    ```
 
 3. レポートには基準のリポジトリ・リビジョン・ファイルへのリンクを残す。
@@ -104,8 +106,9 @@ gh pr view 123 --repo OWNER/REPO --json number,title,body,url,author,state,baseR
 
 ### 4. Markdown を出力する
 
-このスキルと同じディレクトリの [template.md](template.md) に沿って、共通基準の出力項目を満たす
+手順 2 で読んだ `template.md` に沿って、共通基準の出力項目を満たす
 日本語の Markdown を作成し、一時ディレクトリの `review.md` に保存する。
+共通 Action の投稿と見た目をそろえるため、本文の先頭に `## 依存更新の調査結果` を付ける。
 見出しの構成と順序は変えず、プレースホルダーとテンプレート内のコメントはすべて置き換える・削除する。
 JSON や Markdown 全体を囲むコードフェンスは付けず、そのまま PR に貼れる本文にする。
 
