@@ -44,6 +44,15 @@ Codex CLI（`~/.codex/AGENTS.md` → `~/dotfiles/AGENTS.md`）の両方が、
 新しいカスタムスキルを追加する場合は `~/dotfiles/skills/<name>/` にファイルを置き、
 `install.sh` を再実行すればよい。
 
+## 依存更新 PR のローカル調査
+
+[`review-dependency-update`](skills/review-dependency-update/SKILL.md) は、
+共通 Action と同じ調査基準を使い、PR に貼り付けられる日本語 Markdown を一時ファイルに出力する。
+対象リポジトリで `/review-dependency-update 123`、Codex では
+`$review-dependency-update 123` と指定する。PR の URL でも指定できる。
+コード修正や PR 投稿は行わない。調査範囲と共通基準の参照方法はスキル本体を参照。
+追加後は `install.sh` で両ツールへのリンクを作成できる。
+
 ## TWG CLI の導入
 
 Jira・Confluence などを Claude Code / Codex から利用するための Atlassian 公式 CLI。
