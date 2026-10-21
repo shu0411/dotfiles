@@ -47,10 +47,10 @@ Codex CLI（`~/.codex/AGENTS.md` → `~/dotfiles/AGENTS.md`）の両方が、
 ## 依存更新 PR のローカル調査
 
 [`review-dependency-update`](skills/review-dependency-update/SKILL.md) は、
-共通 Action と同じ調査基準を使い、PR に貼り付けられる日本語 Markdown を一時ファイルに出力する。
+共通 Action と同じ調査基準を使い、日本語 Markdown のレポートを一時ファイルに出力して PR にコメントとして投稿する。
 対象リポジトリで `/review-dependency-update 123`、Codex では
 `$review-dependency-update 123` と指定する。PR の URL でも指定できる。
-コード修正や PR 投稿は行わない。調査範囲と共通基準の参照方法はスキル本体を参照。
+コード修正やマージは行わない。調査範囲・投稿条件と共通基準の参照方法はスキル本体を参照。
 追加後は `install.sh` で両ツールへのリンクを作成できる。
 
 ## TWG CLI の導入

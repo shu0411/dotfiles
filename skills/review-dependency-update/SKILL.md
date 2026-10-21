@@ -1,13 +1,13 @@
 ---
 name: review-dependency-update
-description: 依存パッケージ更新の GitHub PR をローカルから調査し、脆弱性・更新前のコードへの影響・更新後の互換性と CI 状態をまとめた、PR に貼り付けられる日本語 Markdown を出力する。「依存更新をレビューして」「Dependabot PR の影響を調べて」「/review-dependency-update」などで使用する。コード修正・PR 投稿・マージは行わない。
+description: 依存パッケージ更新の GitHub PR をローカルから調査し、脆弱性・更新前のコードへの影響・更新後の互換性と CI 状態をまとめた日本語 Markdown を作成して、PR にコメントとして投稿する。「依存更新をレビューして」「Dependabot PR の影響を調べて」「/review-dependency-update」などで使用する。コード修正・マージは行わない。
 ---
 
 # review-dependency-update — 依存更新 PR のローカル調査
 
 対象リポジトリのローカル作業ディレクトリで実行する。
 調査基準は `shu0411/.github` の `actions/review-dependency-update/prompt.md` を正とし、
-このスキルではローカルでの資料取得と Markdown 出力の方法を定める。
+このスキルではローカルでの資料取得、Markdown 出力、PR へのコメント投稿の方法を定める。
 
 ## 入力
 
@@ -20,7 +20,9 @@ description: 依存パッケージ更新の GitHub PR をローカルから調�
 
 ## 作業範囲
 
-- ソースコード・設定・ロックファイルの変更、ブランチ切り替え、stash、コミット、push、PR 操作をしない。
+- ソースコード・設定・ロックファイルの変更、ブランチ切り替え、stash、コミット、push をしない。
+  PR 操作は手順 5 のレビューコメント投稿だけを行い、ラベル・レビュー承認・マージ・クローズや
+  `@dependabot` コマンドなど他の操作はしない。
   作業ツリーに未コミット変更があっても退避・破棄せず、取得した SHA のコードを調べる。
 - 標準では依存インストール、ビルド、テスト、PR 内のスクリプト実行をしない。
   ローカル実行も明示的に依頼された場合だけ、対象 SHA の隔離した一時作業先で、
@@ -72,7 +74,7 @@ gh pr view 123 --repo OWNER/REPO --json number,title,body,url,author,state,baseR
 
 **ローカルでの読み替え**：共通基準の「JSON 入力ファイル」は次の手順で集める資料に置き換える。
 「Bash を使わない」は Git・GitHub の読み取りコマンドと一時ファイル出力を許可する形に読み替える。
-「JSON の review フィールド」は純粋な Markdown ファイルに置き換え、後段のコメント投稿は行わない。
+「JSON の review フィールド」は純粋な Markdown ファイルに置き換え、後段のコメント投稿は手順 5 で行う。
 ローカル検証を明示的に依頼された場合だけ、上の作業範囲で許可した実行結果も資料に加える。
 脆弱性・影響・互換性の判断基準は変更しない。
 
@@ -116,8 +118,25 @@ JSON や Markdown 全体を囲むコードフェンスは付けず、そのま�
 調査中に変化していた場合はその事実を本文の冒頭に明記し、旧 SHA の結果を現在の PR の
 評価として提示しない。必要な再調査の範囲を示し、変更が続く場合に無制限にやり直さない。
 
-最後にレポートの保存先を提示し、PR への投稿はしない。
 CI 完了後の自動更新は行わないため、マージ時には最新 CI の確認が必要と記載する。
 
-CLI の仕様は [gh pr view](https://cli.github.com/manual/gh_pr_view) と
-[gh pr checks](https://cli.github.com/manual/gh_pr_checks) を参照。
+### 5. PR にコメントを投稿する
+
+手順 4 の `review.md` を対象 PR に新規コメントとして 1 件投稿する。
+本文は保存したファイルから渡し、シェルの引数やヒアドキュメントに展開しない。
+
+```bash
+gh pr comment 123 --repo OWNER/REPO --body-file "$review_dir/review.md"
+```
+
+- 投稿直前に PR の状態と base/head SHA を再取得し、手順 4 で確認した値と一致する場合だけ投稿する。
+  変化していた・PR がクローズ済み・取得できない場合は投稿せず、理由とレポートの保存先を報告する。
+- 本文にメンション、自動マージの指示、認証情報、秘密情報が含まれていないことを投稿前に確認する。
+- 過去のコメントの編集・削除はしない。同じ PR に再実行した場合も新しいコメントとして投稿する。
+- 投稿に失敗した場合は再試行を繰り返さず、エラー内容とレポートの保存先を報告する。
+
+最後に投稿したコメントの URL とレポートの保存先を提示する。
+
+CLI の仕様は [gh pr view](https://cli.github.com/manual/gh_pr_view)、
+[gh pr checks](https://cli.github.com/manual/gh_pr_checks)、
+[gh pr comment](https://cli.github.com/manual/gh_pr_comment) を参照。
