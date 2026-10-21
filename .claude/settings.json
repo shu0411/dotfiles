@@ -54,6 +54,10 @@
       "Bash(git push:*)"
     ]
   },
+  "enabledPlugins": {
+    "example-skills@anthropic-agent-skills": true,
+    "github@claude-plugins-official": true
+  },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
       "source": {
@@ -63,8 +67,5 @@
     }
   },
   "effortLevel": "high",
-  "theme": "dark",
-  "enabledPlugins": {
-    "example-skills@anthropic-agent-skills": true
-  }
+  "theme": "dark"
 }
